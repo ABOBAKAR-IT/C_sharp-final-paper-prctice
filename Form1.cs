@@ -16,5 +16,10 @@ namespace C_sharp_final_paper_prctice
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
