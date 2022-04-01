@@ -116,7 +116,22 @@ namespace C_sharp_final_paper_prctice
 
         private void Button3_Click(object sender, EventArgs e)
         {
-          
+            if (!String.IsNullOrWhiteSpace(textBox2.Text))
+            {
+                foreach (DataRow row in table.Rows)
+                {
+                    if (row["Roll_No"].ToString() == textBox2.Text)
+                    {
+                        table.Rows.Remove(row);
+                        break;
+                    }
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Kindly Fill the Requirements!");
+            }
         }
     }
 }
