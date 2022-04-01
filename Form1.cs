@@ -74,7 +74,7 @@ namespace C_sharp_final_paper_prctice
 
         }
 
-        private void Button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e) //*** update button code ***
         {
             foreach (DataRow row in table.Rows)
             {
@@ -114,7 +114,7 @@ namespace C_sharp_final_paper_prctice
             dataGridView1.Refresh();
         }
 
-        private void Button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e) //*** delete button code
         {
             if (!String.IsNullOrWhiteSpace(textBox2.Text))
             {
