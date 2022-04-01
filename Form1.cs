@@ -30,7 +30,7 @@ namespace C_sharp_final_paper_prctice
           
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)    //**** Add Button Code ****
         {
             string name = textBox1.Text;
             string rollno = textBox2.Text;
@@ -59,7 +59,7 @@ namespace C_sharp_final_paper_prctice
             {
                 skills = skills + " " + checkBox3.Text;
             }
-            MessageBox.Show(skills);
+           // MessageBox.Show(skills);
 
 
             DataRow row1 = table.NewRow();
@@ -72,6 +72,51 @@ namespace C_sharp_final_paper_prctice
             table.Rows.Add(row1);
             dataGridView1.Refresh();
 
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            foreach (DataRow row in table.Rows)
+            {
+                if (row["Roll_No"].ToString() == textBox2.Text)
+                {
+                    row["Name"] = textBox1.Text;
+                    row["Class"] = textBox2.Text;
+                    string gender;
+                    if (radioButton1.Checked == true)
+                    {
+                        gender = "male";
+
+                    }
+                    else
+                    {
+                        gender = "female";
+                    }
+
+                    string skills = " ";
+                    if (checkBox1.Checked)
+                    {
+                        skills = checkBox1.Text;
+                    }
+                    if (checkBox2.Checked)
+                    {
+                        skills = skills + " " + checkBox2.Text;
+                    }
+                    if (checkBox3.Checked)
+                    {
+                        skills = skills + " " + checkBox3.Text;
+                    }
+                    row["Gender"] = gender;
+                    row["Skills"] = skills;
+                    break;
+                }
+            }
+            dataGridView1.Refresh();
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+          
         }
     }
 }
