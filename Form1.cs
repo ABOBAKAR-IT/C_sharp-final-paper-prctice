@@ -161,6 +161,7 @@ namespace C_sharp_final_paper_prctice
         {
             try
             {
+
                 string str_connection = @"Data Source=RANA-ABOBAKAR\SQLEXPRESS;Initial Catalog=students;Integrated Security=true";
                 connection = new SqlConnection(str_connection);
                 connection.Open();
@@ -168,7 +169,8 @@ namespace C_sharp_final_paper_prctice
                 command = new SqlCommand(sql, connection);
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.InsertCommand = command;
-                adapter.InsertCommand.BeginExecuteNonQuery();
+                MessageBox.Show(adapter.InsertCommand.ExecuteNonQuery().ToString() + "  Record add");
+
                 connection.Close();
             }
             catch(Exception err)
