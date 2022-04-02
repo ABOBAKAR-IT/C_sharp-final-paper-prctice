@@ -55,22 +55,10 @@ namespace C_sharp_final_paper_prctice
 
         private void Button3_Click(object sender, EventArgs e) //*** delete button code
         {
-            if (!String.IsNullOrWhiteSpace(textBox2.Text))
-            {
-                foreach (DataRow row in table.Rows)
-                {
-                    if (row["Roll_No"].ToString() == textBox2.Text)
-                    {
-                        table.Rows.Remove(row);
-                        break;
-                    }
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("Kindly Fill the Requirements!");
-            }
+            delete_data_in_database();
+            skills_delete(textBox2.Text);
+            table.Rows.Clear();
+            read_data_from_database();
         }
 
 
@@ -178,7 +166,7 @@ namespace C_sharp_final_paper_prctice
             string str_connection = @"Data Source=RANA-ABOBAKAR\SQLEXPRESS;Initial Catalog=students;Integrated Security=true";
             connection = new SqlConnection(str_connection);
             connection.Open();
-            string sql = $"select * from std_table  full join skills on Roll_no=Roll";
+            string sql = $"select * from std_table  full join skills on Roll_No=roll";
             command = new SqlCommand(sql, connection);
             SqlDataReader dataReader;
             dataReader= command.ExecuteReader();
@@ -243,7 +231,50 @@ namespace C_sharp_final_paper_prctice
         }
         private void delete_data_in_database()
         {
+            string str_connection = @"Data Source=RANA-ABOBAKAR\SQLEXPRESS;Initial Catalog=students;Integrated Security=true";
+            connection = new SqlConnection(str_connection);
+            connection.Open();
+            string sql = $"DELETE std_table where Roll_No='{textBox2.Text}' ";
+            command = new SqlCommand(sql, connection);
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.InsertCommand = command;
+            MessageBox.Show(adapter.InsertCommand.ExecuteNonQuery().ToString() + "  Record Delete");
 
+            connection.Close();
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox2.Text))
+            {
+                table.Rows.Clear();
+
+                read_data_from_database();
+            }
+            else
+            {
+                table.Rows.Clear();
+                string str_connection = @"Data Source=RANA-ABOBAKAR\SQLEXPRESS;Initial Catalog=students;Integrated Security=true";
+                connection = new SqlConnection(str_connection);
+                connection.Open();
+                string sql = $"select * from std_table  full join skills on Roll_No=Roll where Roll_No='{textBox2.Text}'";
+                command = new SqlCommand(sql, connection);
+                SqlDataReader dataReader;
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    DataRow row = this.table.NewRow();
+                    row["Name"] = dataReader.GetValue(0);
+                    row["Roll_No"] = dataReader.GetValue(1);
+                    row["Class"] = dataReader.GetValue(2);
+                    row["Gender"] = dataReader.GetValue(3);
+                    row["Skills"] = dataReader.GetValue(5);
+
+                    this.table.Rows.Add(row);
+                }
+                dataGridView1.Refresh();
+                connection.Close();
+            }
         }
     }
 }
