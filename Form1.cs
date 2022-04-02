@@ -130,11 +130,12 @@ namespace C_sharp_final_paper_prctice
                 string str_connection = @"Data Source=RANA-ABOBAKAR\SQLEXPRESS;Initial Catalog=students;Integrated Security=true";
                 connection = new SqlConnection(str_connection);
                 connection.Open();
-                string sql = $"insert into std_table(Name,Roll_No,Clas,Gender) value ('{name}','{rollno}','{cls}','{gender}')";
+                string sql = $"INSERT INTO std_table (Name,Roll_No,Cls,Gender) values ('{name}','{rollno}','{cls}','{gender}')";
                 command = new SqlCommand(sql, connection);
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.InsertCommand = command;
-                adapter.InsertCommand.BeginExecuteNonQuery(); 
+                MessageBox.Show(adapter.InsertCommand.ExecuteNonQuery().ToString() + "  Record add");
+
                 connection.Close();
                 string skills = " ";
                 if (checkBox1.Checked)
@@ -163,7 +164,7 @@ namespace C_sharp_final_paper_prctice
                 string str_connection = @"Data Source=RANA-ABOBAKAR\SQLEXPRESS;Initial Catalog=students;Integrated Security=true";
                 connection = new SqlConnection(str_connection);
                 connection.Open();
-                string sql = $"insert into skills(skills,Roll) value ('{skills}','{rollno}')";
+                string sql = $"insert into skills(skills,roll) values ('{skills}','{rollno}')";
                 command = new SqlCommand(sql, connection);
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.InsertCommand = command;
@@ -190,10 +191,10 @@ namespace C_sharp_final_paper_prctice
             {
                 DataRow row = this.table.NewRow();
                 row["Name"] = dataReader.GetValue(0);
-                row["Roll_No"] = dataReader.GetValue(2);
-                row["Class"] = dataReader.GetValue(3);
-                row["Gender"] = dataReader.GetValue(4);
-                row["Skills"] = dataReader.GetValue(6);
+                row["Roll_No"] = dataReader.GetValue(1);
+                row["Class"] = dataReader.GetValue(2);
+                row["Gender"] = dataReader.GetValue(3);
+                row["Skills"] = dataReader.GetValue(5);
 
                 this.table.Rows.Add(row);
             }
