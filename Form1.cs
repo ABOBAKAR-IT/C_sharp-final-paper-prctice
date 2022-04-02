@@ -276,5 +276,24 @@ namespace C_sharp_final_paper_prctice
                 connection.Close();
             }
         }
+
+        private void Button5_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox2.Text))
+            {
+                MessageBox.Show("Enter a Roll No");
+            }
+            else{
+
+                Form2 frm = new Form2(textBox2.Text);
+                frm.Show();
+                this.Hide();
+
+
+
+            }
+
+
+        }
     }
 }
