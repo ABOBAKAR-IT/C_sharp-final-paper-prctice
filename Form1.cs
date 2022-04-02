@@ -47,42 +47,10 @@ namespace C_sharp_final_paper_prctice
 
         private void Button2_Click(object sender, EventArgs e) //*** update button code ***
         {
-            foreach (DataRow row in table.Rows)
-            {
-                if (row["Roll_No"].ToString() == textBox2.Text)
-                {
-                    row["Name"] = textBox1.Text;
-                    row["Class"] = textBox2.Text;
-                    string gender;
-                    if (radioButton1.Checked == true)
-                    {
-                        gender = "male";
+            update_data_in_database();
+            table.Rows.Clear();
+            read_data_from_database();
 
-                    }
-                    else
-                    {
-                        gender = "female";
-                    }
-
-                    string skills = " ";
-                    if (checkBox1.Checked)
-                    {
-                        skills = checkBox1.Text;
-                    }
-                    if (checkBox2.Checked)
-                    {
-                        skills = skills + " " + checkBox2.Text;
-                    }
-                    if (checkBox3.Checked)
-                    {
-                        skills = skills + " " + checkBox3.Text;
-                    }
-                    row["Gender"] = gender;
-                    row["Skills"] = skills;
-                    break;
-                }
-            }
-            dataGridView1.Refresh();
         }
 
         private void Button3_Click(object sender, EventArgs e) //*** delete button code
@@ -179,6 +147,31 @@ namespace C_sharp_final_paper_prctice
 
             }
         }
+        private void skills_delete(string rollno)
+        {
+            try
+            {
+
+                string str_connection = @"Data Source=RANA-ABOBAKAR\SQLEXPRESS;Initial Catalog=students;Integrated Security=true";
+                connection = new SqlConnection(str_connection);
+                connection.Open();
+                string sql = $"delete skills where roll='{rollno}'";
+                command = new SqlCommand(sql, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.InsertCommand = command;
+                MessageBox.Show(adapter.InsertCommand.ExecuteNonQuery().ToString() + "  Record add");
+
+                connection.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+
+            }
+        }
+
+
+
         private void read_data_from_database()
         {
 
@@ -205,7 +198,48 @@ namespace C_sharp_final_paper_prctice
         }
         private void update_data_in_database()
         {
+            try
+            {
+                string gender;
+                if (radioButton1.Checked == true)
+                {
+                    gender = "male";
 
+                }
+                else
+                {
+                    gender = "female";
+                }
+                string str_connection = @"Data Source=RANA-ABOBAKAR\SQLEXPRESS;Initial Catalog=students;Integrated Security=true";
+                connection = new SqlConnection(str_connection);
+                connection.Open();
+                string sql = $"update std_table set Name='{textBox1.Text}',Roll_No='{textBox2.Text}',Cls='{textBox3.Text}',Gender='{gender}' where Roll_No='{textBox2.Text}' ";
+                command = new SqlCommand(sql, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.InsertCommand = command;
+                MessageBox.Show(adapter.InsertCommand.ExecuteNonQuery().ToString() + "  Record add");
+
+                connection.Close();
+                string skills = " ";
+                skills_delete(textBox2.Text);
+                if (checkBox1.Checked)
+                {
+                    skills_add(checkBox1.Text, textBox2.Text);
+                }
+                if (checkBox2.Checked)
+                {
+                    skills_add(checkBox2.Text, textBox2.Text);
+                }
+                if (checkBox3.Checked)
+                {
+                    skills_add(checkBox3.Text, textBox2.Text);
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+
+            }
         }
         private void delete_data_in_database()
         {
