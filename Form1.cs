@@ -287,7 +287,7 @@ namespace C_sharp_final_paper_prctice
 
                 Form2 frm = new Form2(textBox2.Text);
                 frm.Show();
-                this.Hide();
+               
 
 
 
